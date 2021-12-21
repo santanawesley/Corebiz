@@ -1,8 +1,11 @@
+import { Header } from './components/header';
+import styles from './App.module.css';
+
 function App() {
   return (
-    <h1>
-      Corebiz
-    </h1>
+    <div>
+      <Header />
+    </div>
   )
 }
 
