@@ -1,0 +1,52 @@
+.contentRegister {
+  background-color: #F2F2F2;
+  color: #333;
+  padding: 24px 16px 16px;
+}
+
+.title {
+  font-size: 22px;
+  line-height: 22px;
+  font-family: Lato;
+  font-weight: 700;
+  padding-bottom: 19px;
+}
+
+.input {
+  width: 288px;
+  height: 48px;
+  border-radius: 5px;
+  margin-bottom: 7px;
+  background-color: #fff;
+  border: none;
+  outline:none;
+  padding: 17px;
+  font-family: Lato;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 14px;
+  color: #585858;
+}
+
+.input:first-child {
+  margin-bottom: 22px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 288px;
+  height: 48px;
+  border-radius: 5px;
+  background-color: #000;
+  font-family: Lato;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.contactText {
+  text-align: left;
+  color: #fff;
+}
