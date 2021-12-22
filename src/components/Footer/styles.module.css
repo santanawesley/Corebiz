@@ -1,0 +1,54 @@
+.contentFooter {
+  background-color: #000;
+  color: #fff;
+  padding: 7px 20px 11px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  margin: 27px 16px 13px 0;
+}
+
+.bar {
+  width: 32px;
+  border-bottom: 4px solid #FFFFFF;
+  margin-bottom: 12px;
+}
+
+.address {
+  font-size: 13px;
+  margin: 12px 0 47px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  margin: 0 auto 26px auto;
+  width: 198px;
+  height: 38px;
+  border-radius: 5px;
+  background-color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.icon {
+  margin-left: 16px;
+  margin-right: 19px;
+}
+
+.contactText {
+  text-align: left;
+}
+
+.credits {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 28px;
+}
+
+.creditsInfo {
+  font-size: 10px;
+}
