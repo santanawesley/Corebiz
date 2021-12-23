@@ -1,10 +1,114 @@
+.showCase {
+  margin: 16px 7px 40px;
+}
+
+.titleShowCase {
+  font-family: Nunito;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 25px;
+  padding-left: 13px;
+}
+
+.bar {
+  width: 32px;
+  border-bottom: 4px solid #C0C0C0;
+  margin-bottom: 12px;
+}
+
+.cardsGroups {
+  display: flex;
+  overflow: auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 140px;
+  color: #7A7A7A;
+  margin-right: 24px;
+}
+
+.backgroundOff {
+  position: absolute;
+  right: 0;
+  border-left: 50px solid transparent;
+  border-top: 50px solid #F8475F;
+}
+
+.off {
+  position: absolute;
+  right: 0;
+  padding: 7.57px 5px 0 0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: right;
+}
+
+.productImage {
+  width: 132px;
+}
+
+.productName {
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 14px;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+.star {
+  margin-right: 3px;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.listPrice {
+  font-size: 11px;
+  line-height: 15px;
+  text-align: center;
+  text-decoration-line: line-through;
+}
+
+.price {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+}
+
+.installments {
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.buttonBuy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 36px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #000;
+  font-family: Lato;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+}
+
 .contentRegister {
   background-color: #F2F2F2;
   color: #333;
   padding: 24px 16px 16px;
 }
 
-.title {
+.titleRegister {
   font-size: 22px;
   line-height: 22px;
   font-family: Lato;
@@ -32,7 +136,7 @@
   margin-bottom: 22px;
 }
 
-.button {
+.buttonRegister {
   display: flex;
   align-items: center;
   justify-content: center;
