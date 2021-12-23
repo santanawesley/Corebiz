@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import "react-toastify/dist/ReactToastify.css";
 
+import { ShowToast } from '../../utils';
 import iconMenu from '../../assets/icon-menu.svg';
 import logo from '../../assets/logo-corebiz-preto-cinza.svg';
 import shoppingCart from '../../assets/shopping-cart.svg';
@@ -15,7 +17,16 @@ export const Header = ({amountItems}: IProps) => {
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    setAmountItemsCart(amountItems)
+    const amount = localStorage.getItem("amountItemsCart");
+    amount && setAmountItemsCart(+amount);
+  }, []);
+
+  useEffect(() => {
+    if(amountItems !== amountItemsCart) {
+      localStorage.setItem("amountItemsCart", amountItems.toString());
+      setAmountItemsCart(amountItems);
+      ShowToast("success", "Item adicionado ao carrinho de compras com sucesso!");
+    }
   }, [amountItems]);
 
   return (

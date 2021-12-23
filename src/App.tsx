@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -28,6 +28,10 @@ function App() {
   const [email, setEmail] = useState('');
   const [amountItemsCart, setAmountItemsCart] = useState(0);
 
+  useEffect(() => {
+    const amount = localStorage.getItem("amountItemsCart");
+    amount && setAmountItemsCart(+amount);
+  }, []);
 
   const mockProducts: Product[] = [
     {
