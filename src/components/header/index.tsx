@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import iconMenu from '../../assets/icon-menu.svg';
 import logo from '../../assets/logo-corebiz-preto-cinza.svg';
@@ -6,9 +6,17 @@ import shoppingCart from '../../assets/shopping-cart.svg';
 import magnifyingGlass from '../../assets/magnifying-glass.svg';
 import styles from './styles.module.css';
 
-export const Header = () => {
-  const [amountItemsCart, setAmountItemsCart] = useState(1);
+interface IProps {
+  amountItems: number;
+}
+
+export const Header = ({amountItems}: IProps) => {
+  const [amountItemsCart, setAmountItemsCart] = useState(0);
   const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    setAmountItemsCart(amountItems)
+  }, [amountItems]);
 
   return (
     <div className={styles.contentHeader}>

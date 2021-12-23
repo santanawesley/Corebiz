@@ -26,6 +26,8 @@ interface Product {
 function App() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [amountItemsCart, setAmountItemsCart] = useState(0);
+
 
   const mockProducts: Product[] = [
     {
@@ -103,7 +105,7 @@ function App() {
 
   return (
     <div>
-      <Header />
+      <Header amountItems={amountItemsCart} />
 
       <div>
         <img src={BannerSlider} />
@@ -141,7 +143,7 @@ function App() {
                   ou em {product.installments[0]?.quantity}x de
                   {product.installments[0] && currencyFormatter(product.installments[0].value)}
                 </div>
-                <button className={styles.buttonBuy}>
+                <button className={styles.buttonBuy} onClick={() => setAmountItemsCart(amountItemsCart + 1)}>
                   COMPRAR
                 </button>
               </div>
