@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
  * @example showToast("error", "Aconteceu um erro!");
  */
 
-const ShowToast = (
+const showToast = (
   type: string,
   message: string
 ) => {
@@ -45,4 +45,4 @@ const ShowToast = (
   };
 };
 
-export default ShowToast;
+export default showToast;

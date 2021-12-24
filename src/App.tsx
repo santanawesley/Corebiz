@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import BannerSlider from './assets/banner.svg';
 import StarFill from './assets/icon-star-fill.svg';
 import StarEmpty from './assets/icon-star-empty.svg';
+import { masks, validation } from './utils';
 
 import styles from './App.module.css';
 
@@ -25,8 +26,11 @@ interface Product {
 
 function App() {
   const [name, setName] = useState('');
+  const [errorName, setErrorName] = useState(false);
   const [email, setEmail] = useState('');
+  const [errorEmail, setErrorEmail] = useState(false);
   const [amountItemsCart, setAmountItemsCart] = useState(0);
+  const [registerEmailScreen, setRegisterEmailScreen] = useState(false);
 
   useEffect(() => {
     const amount = localStorage.getItem("amountItemsCart");
@@ -87,16 +91,6 @@ function App() {
     }
   ]
 
-  function currencyFormatter(value: number) {
-    const format = /^([\d]*)\.?([\d]{2})/;
-    const separatedByCents = String(value).replace(format,"$1.$2");
-
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(Number(separatedByCents));
-  }
-
   const ratingStars = (numberOfStars: number) => {
     const starArray: boolean[] = []
     for(let i = 0; i<5; i++) {
@@ -107,13 +101,53 @@ function App() {
     });
   }
 
+  async function registerEmail(e: any) {
+    e.preventDefault();
+    nameValidation();
+    emailValidation();
+    if(name && email && !errorName && !errorEmail) {
+      //chamar Api
+      setRegisterEmailScreen(false);
+    }
+  }
+
+  function nameValidation() {
+    try {
+      const validate = validation.name(name);
+      if(validate) {
+        setErrorName(false);
+      } else {
+        setErrorName(true);
+      }
+    } catch(e) {
+      setErrorName(true);
+    }
+  }
+
+  async function emailValidation() {
+    try {
+      const validate = validation.email(email);
+      if(validate) {
+        setErrorEmail(false);
+      } else {
+        setErrorEmail(true);
+      }
+    } catch (e) {
+        setErrorEmail(true);
+    }
+  }
+
+  function registerNewEmailScreen() {
+    setName('');
+    setEmail('');
+    setRegisterEmailScreen(true)
+  }
+
   return (
     <div>
       <Header amountItems={amountItemsCart} />
 
-      <div>
-        <img src={BannerSlider} />
-      </div>
+      <img src={BannerSlider} />
 
       <div className={styles.showCase}>
         <div className={styles.titleShowCase}>
@@ -127,26 +161,26 @@ function App() {
                 <div style={{position: 'relative', width: '132px'}}>
                   {product.listPrice && <>
                     <div className={styles.backgroundOff}></div>
-                    <div className={styles.off}>OFF</div>
+                    <p className={styles.off}>OFF</p>
                   </>}
                   <img src={product.imageUrl} alt={product.productName} className={styles.productImage}/>
                 </div>
-                <div className={styles.productName}>
+                <p className={styles.productName}>
                   {product.productName}
-                </div>
+                </p>
                 <div>
                   {ratingStars(product.stars)}
                 </div>
-                <div className={`${styles.listPrice} ${!product.listPrice && styles.hide}`}>
-                  de {product.listPrice && currencyFormatter(product.listPrice)}
-                </div>
-                <div className={styles.price}>
-                  por {currencyFormatter(product.price)}
-                </div>
-                <div className={`${styles.installments} ${!product.installments.length && styles.hide}`}>
+                <p className={`${styles.listPrice} ${!product.listPrice && styles.hide}`}>
+                  de {product.listPrice && masks.currencyFormatter(product.listPrice)}
+                </p>
+                <p className={styles.price}>
+                  por {masks.currencyFormatter(product.price)}
+                </p>
+                <p className={`${styles.installments} ${!product.installments.length && styles.hide}`}>
                   ou em {product.installments[0]?.quantity}x de
-                  {product.installments[0] && currencyFormatter(product.installments[0].value)}
-                </div>
+                  {product.installments[0] && masks.currencyFormatter(product.installments[0].value)}
+                </p>
                 <button className={styles.buttonBuy} onClick={() => setAmountItemsCart(amountItemsCart + 1)}>
                   COMPRAR
                 </button>
@@ -156,33 +190,55 @@ function App() {
         </div>
       </div>
 
-      <div className={styles.contentRegister}>
-        <h1 className={styles.titleRegister}>Participe de nossas news com promoções e novidades!</h1>
+      {registerEmailScreen ?
+        <form className={styles.contentRegister} onSubmit={(e) => registerEmail(e)}>
+          <h1 className={styles.titleRegister}>Participe de nossas news com promoções e novidades!</h1>
 
-        <div className={styles.inputs}>
-          <input
-            type='text'
-            placeholder='Digite seu nome'
-            className={styles.input}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type='text'
-            placeholder='Digite seu email'
-            className={styles.input}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+          <div className={styles.inputs}>
+            <input
+              type='text'
+              placeholder='Digite seu nome'
+              className={`${styles.input} ${errorName && styles.inputError}`}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onBlur={nameValidation}
+            />
+            {errorName &&
+              <p className={styles.error}>
+                Preencha seu nome completo
+              </p>
+            }
+            <input
+              type='text'
+              placeholder='Digite seu e-mail'
+              className={`${styles.input} ${styles.inputEmail} ${errorEmail && styles.inputError}`}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={emailValidation}
+            />
+            {errorEmail &&
+              <p className={styles.error}>
+                Preencha com um e-mail válido
+              </p>
+            }
+          </div>
 
-        <div>
-          <button className={styles.buttonRegister}>
+          <button
+            className={`${styles.buttonRegister} ${(errorName || errorEmail) && styles.buttonDisabled}`}
+            type='submit'
+            disabled={errorName || errorEmail}
+          >
             <span className={styles.contactText}>Eu quero!</span>
           </button>
+        </form> :
+        <div className={styles.contentRegister}>
+          <h2 className={styles.titleRegisterSuccess}>Seu e-mail foi cadastrado com sucesso!</h2>
+          <p className={styles.textRegisterSuccess}>A partir de agora você receberá as novidades e ofertas exclusivas.</p>
+          <button className={styles.buttonRegister} onClick={() => registerNewEmailScreen()}>
+            <span className={styles.contactText}>Cadastrar novo e-mail!</span>
+          </button>
         </div>
-      </div>
-      
+      }      
       <Footer />
     </div>
   )

@@ -120,10 +120,9 @@
   width: 288px;
   height: 48px;
   border-radius: 5px;
-  margin-bottom: 7px;
   background-color: #fff;
   border: none;
-  outline:none;
+  outline-color: #BDBDBD;
   padding: 17px;
   font-family: Lato;
   font-weight: 700;
@@ -132,8 +131,21 @@
   color: #585858;
 }
 
-.input:first-child {
-  margin-bottom: 22px;
+.inputEmail {
+  margin-top: 22px;
+}
+
+.inputError {
+  border: 1px solid #D7182A;
+}
+
+.error {
+  font-family: Lato;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 12px;
+  color: #D7182A;
+  margin-top: 8px;
 }
 
 .buttonRegister {
@@ -148,6 +160,26 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 14px;
+  margin-top: 7px;
+}
+
+.buttonDisabled {
+  background-color: #333333;
+}
+
+.titleRegisterSuccess {
+  font-size: 14px;
+  line-height: 14px;
+  font-family: Lato;
+  font-weight: 700;
+}
+
+.textRegisterSuccess {
+  font-family: Lato;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 12px;
+  margin-bottom: 15px;
 }
 
 .contactText {
