@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Slider from 'react-slick';
 
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -7,6 +8,8 @@ import StarFill from './assets/icon-star-fill.svg';
 import StarEmpty from './assets/icon-star-empty.svg';
 import { masks, validation } from './utils';
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import styles from './App.module.css';
 
 interface Product {
@@ -143,6 +146,18 @@ function App() {
     setRegisterEmailScreen(true)
   }
 
+  var settings = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    swipe: true, //
+    swipeToSlide: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    lazyload: 'ondemand',
+    autoplay: true,
+  };
+
   return (
     <div>
       <Header amountItems={amountItemsCart} />
@@ -154,7 +169,7 @@ function App() {
           Mais Vendidos
           <div className={styles.bar}></div>
         </div>
-        <div className={styles.cardsGroups}>
+        <Slider {...settings}>
           {mockProducts.map(product => {
             return (
               <div className={styles.card} key={product.productId}>
@@ -168,7 +183,7 @@ function App() {
                 <p className={styles.productName}>
                   {product.productName}
                 </p>
-                <div>
+                <div className={styles.stars}>
                   {ratingStars(product.stars)}
                 </div>
                 <p className={`${styles.listPrice} ${!product.listPrice && styles.hide}`}>
@@ -187,7 +202,7 @@ function App() {
               </div>
             )
           })}
-        </div>
+        </Slider>
       </div>
 
       {registerEmailScreen ?

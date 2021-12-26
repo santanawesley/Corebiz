@@ -16,11 +16,6 @@
   margin-bottom: 12px;
 }
 
-.cardsGroups {
-  display: flex;
-  overflow: auto;
-}
-
 .card {
   display: flex;
   flex-direction: column;
@@ -58,6 +53,10 @@
   line-height: 14px;
   margin-top: 5px;
   white-space: nowrap;
+}
+
+.stars {
+  display: flex;
 }
 
 .star {
