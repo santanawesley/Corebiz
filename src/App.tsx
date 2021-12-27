@@ -8,6 +8,8 @@ import Banner from './assets/banner-desk.svg';
 import StarFill from './assets/icon-star-fill.svg';
 import StarEmpty from './assets/icon-star-empty.svg';
 import { masks, validation } from './utils';
+import api from './services/api';
+import { showToast } from './utils';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -29,122 +31,38 @@ interface Product {
 }
 
 function App() {
+  const [listProducts, setListProducts] = useState<Product[]>([]);
   const [name, setName] = useState('');
   const [errorName, setErrorName] = useState(false);
   const [email, setEmail] = useState('');
   const [errorEmail, setErrorEmail] = useState(false);
   const [amountItemsCart, setAmountItemsCart] = useState(0);
   const [registerEmailScreen, setRegisterEmailScreen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (async function getProductsList() {
+      setLoading(true);
+
+      try{
+        const response = await api.get<Product[]>('/api/v1/products')
+        if(response.data) {
+          setListProducts(response.data);
+        } else{
+          showToast("error", "Ocorreu um erro na busca da listagem de produtos. Favor tentar novamente mais tarde!");
+        }
+      } catch(e){
+        showToast("error", "Ocorreu um erro na busca da listagem de produtos. Favor tentar novamente mais tarde!");
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const amount = localStorage.getItem("amountItemsCart");
     amount && setAmountItemsCart(+amount);
   }, []);
-
-  const mockProducts: Product[] = [
-    {
-      "productId": 1,
-      "productName": "SAPATO FLOATER PRETO",
-      "stars": 1,
-      "imageUrl": "https://corebiz-test.herokuapp.com/images/product-1.png",
-      "listPrice": null,
-      "price": 25990,
-      "installments": [
-        {
-          "quantity": 9,
-          "value": 2887
-        }
-      ]
-    },
-    {
-      "productId": 2,
-      "productName": "SANDÁLIA LINHO BROWN",
-      "stars": 4,
-      "imageUrl": "https://corebiz-test.herokuapp.com/images/product-2.png",
-      "listPrice": 29900,
-      "price": 19900,
-      "installments": [
-        {
-          "quantity": 4,
-          "value": 4975
-        }
-      ]
-    },
-    {
-      "productId": 3,
-      "productName": "BOTA MUSTANG PRETO",
-      "stars": 2,
-      "imageUrl": "https://corebiz-test.herokuapp.com/images/product-3.png",
-      "listPrice": 32900,
-      "price": 29900,
-      "installments": [
-        {
-          "quantity": 10,
-          "value": 2990
-        }
-      ]
-    },
-    {
-      "productId": 4,
-      "productName": "CINTO SEMICROMO PRETO 40MM",
-      "stars": 3,
-      "imageUrl": "https://corebiz-test.herokuapp.com/images/product-4.png",
-      "listPrice": null,
-      "price": 7990,
-      "installments": []
-    },
-    {
-      "productId": 1,
-      "productName": "SAPATO FLOATER PRETO",
-      "stars": 1,
-      "imageUrl": "https://corebiz-test.herokuapp.com/images/product-1.png",
-      "listPrice": null,
-      "price": 25990,
-      "installments": [
-        {
-          "quantity": 9,
-          "value": 2887
-        }
-      ]
-    },
-    {
-      "productId": 2,
-      "productName": "SANDÁLIA LINHO BROWN",
-      "stars": 4,
-      "imageUrl": "https://corebiz-test.herokuapp.com/images/product-2.png",
-      "listPrice": 29900,
-      "price": 19900,
-      "installments": [
-        {
-          "quantity": 4,
-          "value": 4975
-        }
-      ]
-    },
-    {
-      "productId": 3,
-      "productName": "BOTA MUSTANG PRETO",
-      "stars": 2,
-      "imageUrl": "https://corebiz-test.herokuapp.com/images/product-3.png",
-      "listPrice": 32900,
-      "price": 29900,
-      "installments": [
-        {
-          "quantity": 10,
-          "value": 2990
-        }
-      ]
-    },
-    {
-      "productId": 4,
-      "productName": "CINTO SEMICROMO PRETO 40MM",
-      "stars": 3,
-      "imageUrl": "https://corebiz-test.herokuapp.com/images/product-4.png",
-      "listPrice": null,
-      "price": 7990,
-      "installments": []
-    }
-  ]
 
   const ratingStars = (numberOfStars: number) => {
     const starArray: boolean[] = []
@@ -226,42 +144,45 @@ function App() {
           Mais Vendidos
           <div className={styles.bar}></div>
         </div>
-        <Slider {...settings}>
-          {mockProducts.map(product => {
-            return (
-              <div className={styles.wrappingCard}>
-                <div className={styles.card} key={product.productId}>
-                  <div className={styles.offBlock}>
-                    {product.listPrice && <>
-                      <div className={styles.backgroundOff}></div>
-                      <p className={styles.off}>OFF</p>
-                    </>}
-                    <img src={product.imageUrl} alt={product.productName} className={styles.productImage}/>
+        {loading ?
+          <div className={styles.loaderButton} /> :
+          <Slider {...settings}>
+            {listProducts.map(product => {
+              return (
+                <div className={styles.wrappingCard}>
+                  <div className={styles.card} key={product.productId}>
+                    <div className={styles.offBlock}>
+                      {product.listPrice && <>
+                        <div className={styles.backgroundOff}></div>
+                        <p className={styles.off}>OFF</p>
+                      </>}
+                      <img src={product.imageUrl} alt={product.productName} className={styles.productImage}/>
+                    </div>
+                    <p className={styles.productName}>
+                      {product.productName}
+                    </p>
+                    <div className={styles.stars}>
+                      {ratingStars(product.stars)}
+                    </div>
+                    <p className={`${styles.listPrice} ${!product.listPrice && styles.hide}`}>
+                      de {product.listPrice && masks.currencyFormatter(product.listPrice)}
+                    </p>
+                    <p className={styles.price}>
+                      por {masks.currencyFormatter(product.price)}
+                    </p>
+                    <p className={`${styles.installments} ${!product.installments.length && styles.hide}`}>
+                      ou em {product.installments[0]?.quantity}x de
+                      {product.installments[0] && masks.currencyFormatter(product.installments[0].value)}
+                    </p>
+                    <button className={styles.buttonBuy} onClick={() => setAmountItemsCart(amountItemsCart + 1)}>
+                      COMPRAR
+                    </button>
                   </div>
-                  <p className={styles.productName}>
-                    {product.productName}
-                  </p>
-                  <div className={styles.stars}>
-                    {ratingStars(product.stars)}
-                  </div>
-                  <p className={`${styles.listPrice} ${!product.listPrice && styles.hide}`}>
-                    de {product.listPrice && masks.currencyFormatter(product.listPrice)}
-                  </p>
-                  <p className={styles.price}>
-                    por {masks.currencyFormatter(product.price)}
-                  </p>
-                  <p className={`${styles.installments} ${!product.installments.length && styles.hide}`}>
-                    ou em {product.installments[0]?.quantity}x de
-                    {product.installments[0] && masks.currencyFormatter(product.installments[0].value)}
-                  </p>
-                  <button className={styles.buttonBuy} onClick={() => setAmountItemsCart(amountItemsCart + 1)}>
-                    COMPRAR
-                  </button>
-                </div>
-              </div>  
-            )
-          })}
-        </Slider>
+                </div>  
+              )
+            })}
+          </Slider>
+        }
       </div>
 
       {registerEmailScreen ?
