@@ -30,6 +30,10 @@ interface Product {
   ] | []
 }
 
+interface RegistrationAnswer {
+  "message": string
+}
+
 function App() {
   const [listProducts, setListProducts] = useState<Product[]>([]);
   const [name, setName] = useState('');
@@ -37,15 +41,16 @@ function App() {
   const [email, setEmail] = useState('');
   const [errorEmail, setErrorEmail] = useState(false);
   const [amountItemsCart, setAmountItemsCart] = useState(0);
-  const [registerEmailScreen, setRegisterEmailScreen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [registerEmailScreen, setRegisterEmailScreen] = useState(true);
+  const [loadingButton, setLoadingButton] = useState(false);
+  const [loadingProduct, setLoadingProduct] = useState(false);
 
   useEffect(() => {
     (async function getProductsList() {
-      setLoading(true);
+      setLoadingProduct(true);
 
       try{
-        const response = await api.get<Product[]>('/api/v1/products')
+        const response = await api.get<Product[]>('/api/v1/products');
         if(response.data) {
           setListProducts(response.data);
         } else{
@@ -54,7 +59,7 @@ function App() {
       } catch(e){
         showToast("error", "Ocorreu um erro na busca da listagem de produtos. Favor tentar novamente mais tarde!");
       } finally {
-        setLoading(false);
+        setLoadingProduct(false);
       }
     })();
   }, []);
@@ -79,8 +84,22 @@ function App() {
     nameValidation();
     emailValidation();
     if(name && email && !errorName && !errorEmail) {
-      //chamar Api
-      setRegisterEmailScreen(false);
+      setLoadingButton(true);
+      try {
+        const response = await api.post<RegistrationAnswer>('/api/v1/newslettxer', {
+          "email": email,
+          "name": name
+        });
+        if(response.data) {
+          setRegisterEmailScreen(false);
+        } else {
+          showToast("error", "Ocorreu um erro no cadastro do e-mail. Favor tentar novamente mais tarde!");
+        }
+      } catch(e){
+          showToast("error", "Ocorreu um erro no cadastro do e-mail. Favor tentar novamente mais tarde!");
+      } finally {
+        setLoadingButton(false);
+      }
     }
   }
 
@@ -144,8 +163,8 @@ function App() {
           Mais Vendidos
           <div className={styles.bar}></div>
         </div>
-        {loading ?
-          <div className={styles.loaderButton} /> :
+        {loadingProduct ?
+          <div className={styles.loaderLarger} /> :
           <Slider {...settings}>
             {listProducts.map(product => {
               return (
@@ -227,7 +246,11 @@ function App() {
               type='submit'
               disabled={errorName || errorEmail}
             >
-              <span className={styles.contactText}>Eu quero!</span>
+              {loadingButton ? (
+                <div className={styles.loaderSmall} />
+              ) : (
+                <span className={styles.contactText}>Eu quero!</span>
+              )}
             </button>
           </div>
         </form> :
