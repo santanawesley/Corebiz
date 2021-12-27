@@ -32,6 +32,7 @@
   display: flex;
   justify-content: space-between;
   padding: 17px 0 4px;
+  flex: 1;
 }
 
 .inputSearch {
@@ -41,4 +42,25 @@
   margin-right: 5px;
   font-size: 13px;
   color: #7A7A7A
+}
+
+.myCount {
+  display: flex;
+  align-items: center;
+}
+
+.myCount > p {
+  width: 120px;
+  margin-left: 6.5px; 
+}
+
+@media screen and (min-width: 381px) {
+  .lineCart {
+    max-width: 1172px;
+    margin: auto;
+  }
+  .search {
+    margin-right: 45px;
+    margin-left: 121px;  
+  }
 }

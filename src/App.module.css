@@ -25,6 +25,12 @@
   margin-right: 24px;
 }
 
+.offBlock {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+}
+
 .backgroundOff {
   position: absolute;
   right: 0;
@@ -45,6 +51,7 @@
 
 .productImage {
   width: 132px;
+  margin: auto;
 }
 
 .productName {
@@ -105,6 +112,9 @@
   background-color: #F2F2F2;
   color: #333;
   padding: 24px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .titleRegister {
@@ -113,6 +123,12 @@
   font-family: Lato;
   font-weight: 700;
   padding-bottom: 19px;
+}
+
+.bodyRegister {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .input {
@@ -179,9 +195,47 @@
   font-size: 12px;
   line-height: 12px;
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .contactText {
   text-align: left;
   color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  .banner {
+    width: 100%;
+  }
+  .showCase {
+    width: 1172px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 216px;
+    color: #7A7A7A;
+    margin-right: 24px;
+  } 
+  .card:hover {
+    background-color: #E6E8EA;
+  }
+  .bodyRegister {
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+  }
+  .inputs {
+    display: flex;
+    align-items: baseline;
+  }
+  .input {
+    margin-right: 8px;
+  }
+  .inputEmail {
+    margin-top: 0;
+  }
 }
