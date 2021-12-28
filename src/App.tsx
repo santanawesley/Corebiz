@@ -150,7 +150,7 @@ function App() {
     infinite: true,
     swipe: true,
     swipeToSlide: true,
-    slidesToShow: pageWidth > 768 ?  4 : 2,
+    slidesToShow: pageWidth > 800 ? 4 : pageWidth > 499 ? 3 : 2,
     slidesToScroll: 1,
     lazyload: 'ondemand', 
     autoplay: true,
@@ -177,10 +177,10 @@ function App() {
                   <div className={styles.wrappingCard} key={product.productId}>
                     <div className={styles.card}>
                       <div className={styles.offBlock}>
-                        {product.listPrice && <>
+                        {product.listPrice && <div className={styles.advertOff}>
                           <div className={styles.backgroundOff}></div>
                           <p className={styles.off}>OFF</p>
-                        </>}
+                        </div>}
                         <img src={product.imageUrl} alt={product.productName} className={styles.productImage}/>
                       </div>
                       <p className={styles.productName}>

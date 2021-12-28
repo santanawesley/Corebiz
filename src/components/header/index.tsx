@@ -37,7 +37,7 @@ export const Header = ({amountItems}: IProps) => {
   return (
     <div className={styles.contentHeader}>
       <div className={styles.lineCart}>
-        {pageWidth < 321 && <img src={iconMenu} alt='Abrir menu' onClick={() => console.log('Abrir Menu')}/>}
+        {pageWidth < 768 && <img src={iconMenu} alt='Abrir menu' onClick={() => console.log('Abrir Menu')}/>}
         <img src={logo} alt='Corebiz' />
         {pageWidth > 768 && <>
             <div className={styles.search}>
@@ -71,7 +71,7 @@ export const Header = ({amountItems}: IProps) => {
         </div>
       </div>
 
-      {pageWidth < 321 && <div className={styles.search}>
+      {pageWidth < 768 && <div className={styles.search}>
           <input
             type='text'
             value={searchText}
