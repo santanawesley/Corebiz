@@ -19,3 +19,5 @@ O projeto apresentado é apenas para a página inicial, não tendo a funcionalid
 2. Para instalar as bibliotecas rode "npm install" no seu terminal
 3. Para rodar o projeto, rode no seu terminal "npm run dev"
 4. Para ver a aplicação rodando localmente na sua máquina, acesse: http://localhost:3000/
+
+*Obs.: O slider do Banner inicial não está funcionando pois não há dados para serem intercalados.
