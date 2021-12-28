@@ -7,6 +7,8 @@ import BannerSmall from './assets/banner.svg';
 import Banner from './assets/banner-desk.svg';
 import StarFill from './assets/icon-star-fill.svg';
 import StarEmpty from './assets/icon-star-empty.svg';
+import ArrowLeft from './assets/left-arrow.svg';
+import ArrowRight from './assets/right-arrow.svg';
 import { masks, validation } from './utils';
 import api from './services/api';
 import { showToast } from './utils';
@@ -140,9 +142,11 @@ function App() {
   || document.documentElement.clientWidth
   || document.body.clientWidth;
 
+  const slider = React.useRef(null);
+
   const settings = {
     dots: pageWidth > 768 ? false : true,
-    arrows: pageWidth > 768 ? true : false,
+    arrows: false,
     infinite: true,
     swipe: true,
     swipeToSlide: true,
@@ -163,45 +167,49 @@ function App() {
           Mais Vendidos
           <div className={styles.bar}></div>
         </div>
-        {loadingProduct ?
-          <div className={styles.loaderLarger} /> :
-          <Slider {...settings}>
-            {listProducts.map(product => {
-              return (
-                <div className={styles.wrappingCard}>
-                  <div className={styles.card} key={product.productId}>
-                    <div className={styles.offBlock}>
-                      {product.listPrice && <>
-                        <div className={styles.backgroundOff}></div>
-                        <p className={styles.off}>OFF</p>
-                      </>}
-                      <img src={product.imageUrl} alt={product.productName} className={styles.productImage}/>
+        <div className={styles.slider}>
+          { pageWidth > 768 && <img onClick={() => slider?.current?.slickPrev()} src={ArrowLeft} className={styles.arrowLeft}/>}
+          {loadingProduct ?
+            <div className={styles.loaderLarger} /> :
+            <Slider  ref={slider} {...settings}>
+              {listProducts.map(product => {
+                return (
+                  <div className={styles.wrappingCard}>
+                    <div className={styles.card} key={product.productId}>
+                      <div className={styles.offBlock}>
+                        {product.listPrice && <>
+                          <div className={styles.backgroundOff}></div>
+                          <p className={styles.off}>OFF</p>
+                        </>}
+                        <img src={product.imageUrl} alt={product.productName} className={styles.productImage}/>
+                      </div>
+                      <p className={styles.productName}>
+                        {product.productName}
+                      </p>
+                      <div className={styles.stars}>
+                        {ratingStars(product.stars)}
+                      </div>
+                      <p className={`${styles.listPrice} ${!product.listPrice && styles.hide}`}>
+                        de {product.listPrice && masks.currencyFormatter(product.listPrice)}
+                      </p>
+                      <p className={styles.price}>
+                        por {masks.currencyFormatter(product.price)}
+                      </p>
+                      <p className={`${styles.installments} ${!product.installments.length && styles.hide}`}>
+                        ou em {product.installments[0]?.quantity}x de
+                        {product.installments[0] && masks.currencyFormatter(product.installments[0].value)}
+                      </p>
+                      <button className={styles.buttonBuy} onClick={() => setAmountItemsCart(amountItemsCart + 1)}>
+                        COMPRAR
+                      </button>
                     </div>
-                    <p className={styles.productName}>
-                      {product.productName}
-                    </p>
-                    <div className={styles.stars}>
-                      {ratingStars(product.stars)}
-                    </div>
-                    <p className={`${styles.listPrice} ${!product.listPrice && styles.hide}`}>
-                      de {product.listPrice && masks.currencyFormatter(product.listPrice)}
-                    </p>
-                    <p className={styles.price}>
-                      por {masks.currencyFormatter(product.price)}
-                    </p>
-                    <p className={`${styles.installments} ${!product.installments.length && styles.hide}`}>
-                      ou em {product.installments[0]?.quantity}x de
-                      {product.installments[0] && masks.currencyFormatter(product.installments[0].value)}
-                    </p>
-                    <button className={styles.buttonBuy} onClick={() => setAmountItemsCart(amountItemsCart + 1)}>
-                      COMPRAR
-                    </button>
-                  </div>
-                </div>  
-              )
-            })}
-          </Slider>
-        }
+                  </div>  
+                )
+              })}
+            </Slider>
+          }
+          { pageWidth > 768 && <img onClick={() => slider?.current?.slickNext()} src={ArrowRight}  className={styles.arrowRight}/>}
+        </div>
       </div>
 
       {registerEmailScreen ?

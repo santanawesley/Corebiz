@@ -16,6 +16,26 @@
   margin-bottom: 12px;
 }
 
+.slider {
+  position: relative;
+}
+
+.arrowLeft {
+  position: absolute;
+  top: 85px;
+  left: -26px;
+  width: 13px;
+  height: 22px
+}
+
+.arrowRight {
+  position: absolute;
+  top: 85px;
+  right: 0;
+  width: 13px;
+  height: 22px
+}
+
 .card {
   display: flex;
   flex-direction: column;
