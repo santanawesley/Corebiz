@@ -3,7 +3,7 @@
 }
 
 .showCase {
-  margin: 16px 7px 40px;
+  margin: 16px 7px 65px;
 }
 
 .titleShowCase {
@@ -52,6 +52,7 @@
 .offBlock {
   width: 100%;
   background-color: #fff;
+  position: relative;
 }
 
 .advertOff {
@@ -87,12 +88,14 @@
   font-weight: 600;
   font-size: 10px;
   line-height: 14px;
-  margin-top: 5px;
+  margin-top: 6px;
   white-space: nowrap;
 }
 
 .stars {
   display: flex;
+  margin-top: 12px;
+  margin-bottom: 8px;
 }
 
 .star {
@@ -120,6 +123,8 @@
 .installments {
   font-size: 11px;
   line-height: 15px;
+  margin-top: 5px;
+  margin-bottom: 4px;
 }
 
 .buttonBuy {
@@ -136,6 +141,8 @@
   font-size: 14px;
   line-height: 14px;
   cursor: pointer;
+  border: none;
+  margin-bottom: 15px;
 }
 
 .contentRegister {
@@ -206,7 +213,12 @@
   font-size: 14px;
   line-height: 14px;
   margin-top: 7px;
+  border: none;
   cursor: pointer;
+}
+
+.buttonNewRegister {
+  width: 288px;
 }
 
 .buttonDisabled {
@@ -262,8 +274,9 @@
 @media screen and (min-width: 768px) {
   .showCase {
     width: 90%;
-    margin-right: auto;
-    margin-left: auto;
+    max-width: 1218px;
+    margin: 16px auto 69px;
+    padding-left: 20px;
   }
   .card {
     display: flex;
@@ -276,10 +289,16 @@
   .card:hover {
     background-color: #E6E8EA;
   }
+  .productImage {
+    width: auto;
+  }
   .bodyRegister {
     display: flex;
     align-items: baseline;
     flex-direction: row;
+  }
+  .contentRegister {
+    padding-bottom: 36px;
   }
   .inputs {
     display: flex;
@@ -293,5 +312,16 @@
   }
   .buttonRegister {
     width: 140px;
+  }
+  .buttonNewRegister {
+    width: 328px;
+  }  
+  .arrowLeft {
+    top: 172px;
+    left: -26px;
+  }
+  .arrowRight {
+    top: 172px;
+    right: 50px;
   }
 }

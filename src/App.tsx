@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Slider from 'react-slick';
 
 import { Header } from './components/Header';
@@ -88,7 +88,7 @@ function App() {
     if(name && email && !errorName && !errorEmail) {
       setLoadingButton(true);
       try {
-        const response = await api.post<RegistrationAnswer>('/api/v1/newslettxer', {
+        const response = await api.post<RegistrationAnswer>('/api/v1/newsletter', {
           "email": email,
           "name": name
         });
@@ -142,7 +142,7 @@ function App() {
   || document.documentElement.clientWidth
   || document.body.clientWidth;
 
-  const slider = React.useRef(null);
+  const slider = useRef<any>(null);
 
   const settings = {
     dots: pageWidth > 768 ? false : true,
@@ -177,7 +177,7 @@ function App() {
                   <div className={styles.wrappingCard} key={product.productId}>
                     <div className={styles.card}>
                       <div className={styles.offBlock}>
-                        {product.listPrice && <div className={styles.advertOff}>
+                        {product.listPrice && <div className={pageWidth > 768 ? '' : styles.advertOff}>
                           <div className={styles.backgroundOff}></div>
                           <p className={styles.off}>OFF</p>
                         </div>}
@@ -208,7 +208,7 @@ function App() {
               })}
             </Slider>
           }
-          { pageWidth > 768 && <img onClick={() => slider?.current?.slickNext()} src={ArrowRight}  className={styles.arrowRight}/>}
+          { pageWidth > 768 && <img onClick={() => slider?.current.slickNext()} src={ArrowRight} className={styles.arrowRight}/>}
         </div>
       </div>
 
@@ -265,7 +265,7 @@ function App() {
         <div className={styles.contentRegister}>
           <h2 className={styles.titleRegisterSuccess}>Seu e-mail foi cadastrado com sucesso!</h2>
           <p className={styles.textRegisterSuccess}>A partir de agora você receberá as novidades e ofertas exclusivas.</p>
-          <button className={styles.buttonRegister} onClick={() => registerNewEmailScreen()}>
+          <button className={`${styles.buttonRegister} ${styles.buttonNewRegister}`} onClick={() => registerNewEmailScreen()}>
             <span className={styles.contactText}>Cadastrar novo e-mail!</span>
           </button>
         </div>
