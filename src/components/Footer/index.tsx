@@ -24,12 +24,12 @@ export const Footer = () => {
         </div>
 
         <div>
-          <button className={styles.button}>
-            <img src={iconEnvelope} alt='Entre em contato' className={styles.icon} onClick={() => console.log('Direcionar para tela de Envio de Mensagem')}/>
+          <button className={styles.button} onClick={() => console.log('Direcionar para tela de Envio de Mensagem')}>
+            <img src={iconEnvelope} alt='Entre em contato' className={styles.icon}/>
             <span className={styles.contactText}>ENTRE EM CONTATO</span>
           </button>
-          <button className={styles.button}>
-            <img src={iconHeadset} alt='Fale com nosso consultor online' className={styles.icon} onClick={() => console.log('Direcionar para o chat')}/>
+          <button className={styles.button} onClick={() => console.log('Direcionar para o chat')}>
+            <img src={iconHeadset} alt='Fale com nosso consultor online' className={styles.icon}/>
             <span className={styles.contactText}>FALE COM O NOSSO CONSULTOR ONLINE</span>
           </button>
         </div>

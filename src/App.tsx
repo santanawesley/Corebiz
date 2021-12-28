@@ -174,8 +174,8 @@ function App() {
             <Slider  ref={slider} {...settings}>
               {listProducts.map(product => {
                 return (
-                  <div className={styles.wrappingCard}>
-                    <div className={styles.card} key={product.productId}>
+                  <div className={styles.wrappingCard} key={product.productId}>
+                    <div className={styles.card}>
                       <div className={styles.offBlock}>
                         {product.listPrice && <>
                           <div className={styles.backgroundOff}></div>
