@@ -37,7 +37,7 @@ export const Header = ({amountItems}: IProps) => {
   return (
     <div className={styles.contentHeader}>
       <div className={styles.lineCart}>
-        {pageWidth < 321 && <img src={iconMenu} alt='Abrir menu' />}
+        {pageWidth < 321 && <img src={iconMenu} alt='Abrir menu' onClick={() => console.log('Abrir Menu')}/>}
         <img src={logo} alt='Corebiz' />
         {pageWidth > 768 && <>
             <div className={styles.search}>
@@ -49,7 +49,7 @@ export const Header = ({amountItems}: IProps) => {
                 className={styles.inputSearch}
               >
               </input>
-              <img src={magnifyingGlass} alt='Pesquisar' />
+              <img src={magnifyingGlass} alt='Pesquisar' className={styles.imgSearch} onClick={() => console.log('Realizar a busca')}/>
             </div>
             <div>
             </div>
@@ -57,15 +57,17 @@ export const Header = ({amountItems}: IProps) => {
         }
         <div className={styles.blockCart}>
           {pageWidth > 768 &&
-            <div className={styles.myCount}>
+            <div className={styles.myCount} onClick={() => console.log('Direcionar para Login')}>
               <img src={iconUser} alt='Acessar minha conta' />
               <p>Minha Conta</p>
             </div>
           }
-          <img src={shoppingCart} alt='Carrinho de compras' />
-          <span className={styles.checkCounter}>
-            {amountItemsCart}
-          </span>
+          <div className={styles.cart} onClick={() => console.log('Direcionar para Itens no carrinho de compra')}>
+            <img src={shoppingCart} alt='Carrinho de compras' />
+            <span className={styles.checkCounter}>
+              {amountItemsCart}
+            </span>
+          </div>
         </div>
       </div>
 

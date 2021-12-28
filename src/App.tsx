@@ -53,7 +53,7 @@ function App() {
         const response = await api.get<Product[]>('/api/v1/products');
         if(response.data) {
           setListProducts(response.data);
-        } else{
+        } else {
           showToast("error", "Ocorreu um erro na busca da listagem de produtos. Favor tentar novamente mais tarde!");
         }
       } catch(e){

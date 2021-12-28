@@ -25,11 +25,11 @@ export const Footer = () => {
 
         <div>
           <button className={styles.button}>
-            <img src={iconEnvelope} alt='Entre em contato' className={styles.icon} />
+            <img src={iconEnvelope} alt='Entre em contato' className={styles.icon} onClick={() => console.log('Direcionar para tela de Envio de Mensagem')}/>
             <span className={styles.contactText}>ENTRE EM CONTATO</span>
           </button>
           <button className={styles.button}>
-            <img src={iconHeadset} alt='Fale com nosso consultor online' className={styles.icon} />
+            <img src={iconHeadset} alt='Fale com nosso consultor online' className={styles.icon} onClick={() => console.log('Direcionar para o chat')}/>
             <span className={styles.contactText}>FALE COM O NOSSO CONSULTOR ONLINE</span>
           </button>
         </div>
